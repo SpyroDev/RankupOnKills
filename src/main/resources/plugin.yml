@@ -1,0 +1,15 @@
+name: RankupOnKills
+main: net.roguedraco.rankuponkills.RankupOnKillsPlugin
+version: 2.0
+depends: [Vault]
+dev-url: http://dev.bukkit.org/server-mods/rankuponkills/
+commands:
+    rankstat:
+      usage: /rankstat
+      description: Show your kill usage
+    killstat:
+      usage: /killstat
+      description: Shows individual kill statistics
+    ranks:
+      usage: /ranks
+      description: Shows available ranks to get ranked up to

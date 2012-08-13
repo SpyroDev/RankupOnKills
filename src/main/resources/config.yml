@@ -1,0 +1,6 @@
+debug: false
+useFancyConsole: true
+addRank: false
+showCountdown: true
+tellPlayer: true
+ranks:

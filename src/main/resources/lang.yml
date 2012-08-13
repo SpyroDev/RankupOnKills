@@ -1,0 +1,19 @@
+# Language File: en_UK
+plugin:
+  enabled: "Plugin sucessfully loaded."
+  disabled: "Plugin has been disabled."
+exceptions:
+  noPermission: "&cYou don't have permission."
+  numExpected: "&cNumber expected, string received instead."
+  errorOccurred: "&cAn error has occurred. See console."
+  notEnoughArgs: "&cNot enough Arguments!"
+  invalidPage: "&cInvalid Page number."
+countdownMessage: "&aYou have %M mob kills, %P player kills, and total of %T. Next rank: %R"
+rankedupMessage: "&aCongratulations, you have been promoted to &b%R&a!"
+rankstat:
+  shared: "&7You need &b%K&7 more kills for &b%R&7."
+  highestRank: "&7You are already the highest rank."
+  playerAndMob: "&7You need &a%P&7 more PvP kills, and &a%M&7 more mob kills for &b%R&7."
+  mobOnly: "&7You need &a%M&7 more mob kills for &b%R&7."
+  playerOnly: "&7You need &a%P&7 more pvp kills for &b%R&7."
+  playerOrMob: "&7You need &a%P%7 more PvP kills, or &a%M&7 more mob kills for &b%R&7."
