@@ -14,15 +14,29 @@ public class Ranks {
 	public static Map<Integer, Rank> ranks = new HashMap<Integer, Rank>();
 
 	public static Rank getNextRank(RDPlayer rdp) {
+		Rank currentRank = getRank(rdp);
+		String rankName = currentRank.getNext(rdp);
+		for (Rank rank : ranks.values()) {
+			if (rank.getName() == rankName) {
+				return rank;
+			}
+		}
+		return currentRank;
+	}
+
+	public static Rank getNextRankAlt(RDPlayer rdp) {
+
 		Set<Integer> keys = ranks.keySet();
 		Integer key = 0;
-		for(Integer rankKey : keys) {
+		for (Integer rankKey : keys) {
 			Rank rank = getRank(rankKey);
-			if(rank.isEligable(rdp.getInt("count.mob"), rdp.getInt("count.player"))) {
+			if (rank.isEligable(rdp.getInt("count.mob"),
+					rdp.getInt("count.player"))) {
 				key = rankKey;
 			}
 		}
-		return getRank(key+1);
+		return getRank(key + 1);
+
 	}
 
 	public static Rank getRank(Integer key) {
@@ -32,13 +46,14 @@ public class Ranks {
 			return ranks.get(0);
 		}
 	}
-	
+
 	public static Rank getRank(RDPlayer rdp) {
 		Set<Integer> keys = ranks.keySet();
 		Rank rank = getRank(0);
-		for(Integer rankKey : keys) {
+		for (Integer rankKey : keys) {
 			Rank rankVal = getRank(rankKey);
-			if(rankVal.isEligable(rdp.getInt("count.mob"), rdp.getInt("count.player"))) {
+			if (rankVal.isEligable(rdp.getInt("count.mob"),
+					rdp.getInt("count.player"))) {
 				rank = rankVal;
 			}
 		}
@@ -46,22 +61,28 @@ public class Ranks {
 	}
 
 	public static void loadRanks() {
-		ConfigurationSection conf = RankupOnKillsPlugin.getPlugin().getConfig().getConfigurationSection("ranks");
+		ConfigurationSection conf = RankupOnKillsPlugin.getPlugin().getConfig()
+				.getConfigurationSection("ranks");
 		Iterator<String> rankKeys = conf.getKeys(false).iterator();
 		Integer x = 0;
 		while (rankKeys.hasNext()) {
 			String key = rankKeys.next();
 
-			Boolean	sharedCount = conf.getBoolean(key+".sharedCount",false);
-			Boolean	requireBoth = conf.getBoolean(key+".requireBoth",false);
-			Integer	pvpCount = conf.getInt(key+".playerCount",0);
-			Integer mobCount = conf.getInt(key+".mobCount",0);
-			Integer totCount = conf.getInt(key+".totCount",(pvpCount+mobCount));
-			
+			Boolean sharedCount = conf.getBoolean(key + ".sharedCount", false);
+			Boolean requireBoth = conf.getBoolean(key + ".requireBoth", false);
+			Integer pvpCount = conf.getInt(key + ".playerCount", 0);
+			Integer mobCount = conf.getInt(key + ".mobCount", 0);
+			Integer totCount = conf.getInt(key + ".totCount",
+					(pvpCount + mobCount));
+			String next = conf.getString(key + ".next","");
+
 			Rank rank = new Rank(key, sharedCount, requireBoth, pvpCount,
-					mobCount, totCount);
+					mobCount, totCount, next);
 			ranks.put(x, rank);
-			RankupOnKillsPlugin.debug("Loaded Rank: ID:"+x+", Rank:"+rank.getName()+", Shared: "+sharedCount+", Both: "+requireBoth+", PVP:"+pvpCount+", Mob:"+mobCount+", Tot:"+totCount);
+			RankupOnKillsPlugin.debug("Loaded Rank: ID:" + x + ", Rank:"
+					+ rank.getName() + ", Shared: " + sharedCount + ", Both: "
+					+ requireBoth + ", PVP:" + pvpCount + ", Mob:" + mobCount
+					+ ", Tot:" + totCount);
 			x++;
 		}
 	}

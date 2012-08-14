@@ -117,7 +117,6 @@ public class DynamicPluginCommandHelpTopic extends HelpTopic {
 
     public static class Factory implements HelpTopicFactory<DynamicPluginCommand> {
 
-        @Override
         public HelpTopic createTopic(DynamicPluginCommand command) {
             return new DynamicPluginCommandHelpTopic(command);
         }

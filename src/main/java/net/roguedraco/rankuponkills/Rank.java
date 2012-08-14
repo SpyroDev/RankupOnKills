@@ -1,5 +1,7 @@
 package net.roguedraco.rankuponkills;
 
+import net.roguedraco.player.RDPlayer;
+
 public class Rank {
 
 	public String name;
@@ -8,6 +10,7 @@ public class Rank {
 	public int requiredPlayerCount;
 	public int requiredMobCount;
 	public int totalRequiredCount;
+	public String next;
 
 	public Rank(String name, boolean sharedCount, boolean requireBoth, int requiredPlayerCount,
 			int requiredMobCount, int totalRequiredCount) {
@@ -17,6 +20,17 @@ public class Rank {
 		this.requiredPlayerCount = requiredPlayerCount;
 		this.requiredMobCount = requiredMobCount;
 		this.totalRequiredCount = totalRequiredCount;
+	}
+	
+	public Rank(String name, boolean sharedCount, boolean requireBoth, int requiredPlayerCount,
+			int requiredMobCount, int totalRequiredCount, String next) {
+		this.name = name;
+		this.sharedCount = sharedCount;
+		this.requireBoth = requireBoth;
+		this.requiredPlayerCount = requiredPlayerCount;
+		this.requiredMobCount = requiredMobCount;
+		this.totalRequiredCount = totalRequiredCount;
+		this.next = next;
 	}
 
 	public boolean isEligable(int mobCount, int playerCount) {
@@ -75,5 +89,15 @@ public class Rank {
 
 	public boolean isRequireBoth() {
 		return requireBoth;
+	}
+	
+	public String getNext(RDPlayer rdp) {
+		if(next != "" && next != null) {
+			return next;
+		}
+		else {
+			Rank rank = Ranks.getNextRankAlt(rdp);
+			return rank.getName();
+		}
 	}
 }
