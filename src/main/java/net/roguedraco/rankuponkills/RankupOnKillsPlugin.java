@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import net.roguedraco.jumpports.Metrics;
 import net.roguedraco.lang.Lang;
 import net.roguedraco.player.RDEvents;
 import net.roguedraco.player.RDPlayers;
