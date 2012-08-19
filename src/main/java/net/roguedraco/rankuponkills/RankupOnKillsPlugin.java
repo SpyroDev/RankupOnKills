@@ -1,11 +1,13 @@
 package net.roguedraco.rankuponkills;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+import net.roguedraco.jumpports.Metrics;
 import net.roguedraco.lang.Lang;
 import net.roguedraco.player.RDEvents;
 import net.roguedraco.player.RDPlayers;
@@ -90,6 +92,14 @@ public class RankupOnKillsPlugin extends JavaPlugin {
 		RDPlayers.setPlugin(this);
 		RDPlayers.loadAll();
 		Ranks.loadRanks();
+		
+		try {
+		    Metrics metrics = new Metrics(this);
+		    metrics.start();
+		} catch (IOException e) {
+		    // Failed to submit the stats :-(
+		}
+		
 		log(Lang.get("plugin.enabled"));
 	}
 
