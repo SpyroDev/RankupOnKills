@@ -34,7 +34,7 @@ public class Events implements Listener {
 			}
 
 			if (p1 instanceof Wolf) {
-				Wolf wolf = (Wolf) event.getEntity();
+				Wolf wolf = (Wolf) p1;
 				if (wolf.getOwner() != null) {
 					try {
 						p1 = (Entity) wolf.getOwner();
