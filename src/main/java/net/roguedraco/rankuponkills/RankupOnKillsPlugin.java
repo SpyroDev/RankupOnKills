@@ -7,10 +7,11 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import net.roguedraco.lang.Lang;
-import net.roguedraco.player.RDEvents;
-import net.roguedraco.player.RDPlayers;
+import net.roguedraco.rankuponkills.Metrics.Graph;
 import net.roguedraco.rankuponkills.commands.GeneralCommands;
+import net.roguedraco.rankuponkills.lang.Lang;
+import net.roguedraco.rankuponkills.player.RDEvents;
+import net.roguedraco.rankuponkills.player.RDPlayers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -94,6 +95,21 @@ public class RankupOnKillsPlugin extends JavaPlugin {
 		
 		try {
 		    Metrics metrics = new Metrics(this);
+		    
+		    Graph weapons = metrics.createGraph("Weapons Used");
+		    
+		    weapons.addPlotter(new Metrics.Plotter("Diamond Sword") {
+
+				@Override
+				public int getValue() {
+					return 3;
+				}
+		    	
+		    });
+		    
+		    Graph mobs = metrics.createGraph("Mobs Killed");
+		    Stats.mobStats(mobs);
+		    
 		    metrics.start();
 		} catch (IOException e) {
 		    // Failed to submit the stats :-(

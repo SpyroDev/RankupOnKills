@@ -1,9 +1,11 @@
-package net.roguedraco.player;
+package net.roguedraco.rankuponkills.player;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.roguedraco.rankuponkills.RankupOnKillsPlugin;
 
@@ -102,6 +104,25 @@ public class RDPlayers {
 			pd.save();
 			RDPlayers.players.put(name, pd);
 		}
+	}
+	
+	public static Set<RDPlayer> getAllPlayers() {
+		Set<RDPlayer> set = new HashSet<RDPlayer>();
+		
+		File[] files = new File("plugins/RankupOnKills/players").listFiles();
+		for (File file : files) {
+			String name = file.getName();
+			int pos = name.lastIndexOf('.');
+			String ext = name.substring(pos + 1);
+			if (ext.equalsIgnoreCase("yml")) {
+				name = name.replaceAll(".yml", "");
+				RDPlayer p = new RDPlayer(name);
+				p.load();
+				set.add(p);
+			}
+		}
+		
+		return set;
 	}
 
 }

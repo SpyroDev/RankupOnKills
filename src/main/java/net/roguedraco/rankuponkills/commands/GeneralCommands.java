@@ -1,11 +1,11 @@
 package net.roguedraco.rankuponkills.commands;
 
-import net.roguedraco.lang.Lang;
-import net.roguedraco.player.RDPlayer;
-import net.roguedraco.player.RDPlayers;
 import net.roguedraco.rankuponkills.Rank;
 import net.roguedraco.rankuponkills.Ranks;
 import net.roguedraco.rankuponkills.RankupOnKillsPlugin;
+import net.roguedraco.rankuponkills.lang.Lang;
+import net.roguedraco.rankuponkills.player.RDPlayer;
+import net.roguedraco.rankuponkills.player.RDPlayers;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package net.roguedraco.player;
+package net.roguedraco.rankuponkills.player;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

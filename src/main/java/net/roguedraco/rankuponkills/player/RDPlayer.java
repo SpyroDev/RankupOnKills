@@ -1,4 +1,4 @@
-package net.roguedraco.player;
+package net.roguedraco.rankuponkills.player;
 
 import java.io.File;
 import java.io.IOException;

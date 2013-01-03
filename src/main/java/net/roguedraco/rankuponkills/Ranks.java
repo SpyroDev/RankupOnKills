@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import net.roguedraco.player.RDPlayer;
+import net.roguedraco.rankuponkills.player.RDPlayer;
 
 public class Ranks {
 

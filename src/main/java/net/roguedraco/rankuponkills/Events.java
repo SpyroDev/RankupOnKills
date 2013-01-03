@@ -1,9 +1,9 @@
 package net.roguedraco.rankuponkills;
 
-import net.roguedraco.lang.Lang;
-import net.roguedraco.player.RDPlayer;
-import net.roguedraco.player.RDPlayers;
 import net.roguedraco.rankuponkills.commands.GeneralCommands;
+import net.roguedraco.rankuponkills.lang.Lang;
+import net.roguedraco.rankuponkills.player.RDPlayer;
+import net.roguedraco.rankuponkills.player.RDPlayers;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -47,58 +47,69 @@ public class Events implements Listener {
 			if (p1 instanceof Player) {
 
 				Player attacker = (Player) p1;
-				RDPlayer rdp = RDPlayers.getPlayer(attacker.getName());
-				
-				Boolean incrimented = false;
+				if (RankupOnKillsPlugin.permission.playerHas(attacker,
+						"rankuponkills.count")) {
 
-				if (p2 instanceof Player) {
-					int num = rdp.getInt("count.player");
-					rdp.set("count.player", (num + 1));
-					RankupOnKillsPlugin.debug("PVP++ " + attacker.getName()
-							+ "(" + rdp.getInt("count.player") + ")");
-					incrimented = true;
-				} else {
-					int num = rdp.getInt("count.mob");
-					rdp.set("count.mob", (num + 1));
-					RankupOnKillsPlugin.debug("MOB++ " + attacker.getName()
-							+ "(" + rdp.getInt("count.mob") + ")");
-					incrimented = true;
-				}
+					RDPlayer rdp = RDPlayers.getPlayer(attacker.getName());
 
-				// Check rankup
-				Rank nextRank = Ranks.getRank(rdp);
+					Boolean incrimented = false;
 
-				if (!RankupOnKillsPlugin.permission.playerInGroup(attacker, nextRank.getName()) && incrimented == true) {
-					// Rankup
-					if (RankupOnKillsPlugin.getPlugin().getConfig()
-							.getBoolean("addRank", false)) {
-						RankupOnKillsPlugin.permission.playerAddGroup(attacker,
-								nextRank.getName());
-						RankupOnKillsPlugin.debug("Added rank for "
-								+ attacker.getName() + " Rank: "
-								+ nextRank.getName());
+					if (p2 instanceof Player) {
+						int num = rdp.getInt("count.player");
+						rdp.set("count.player", (num + 1));
+						RankupOnKillsPlugin.debug("PVP++ " + attacker.getName()
+								+ "(" + rdp.getInt("count.player") + ")");
+						incrimented = true;
 					} else {
-						RankupOnKillsPlugin.permission.playerRemoveGroup(
-								attacker, RankupOnKillsPlugin.permission
-										.getPrimaryGroup(attacker));
-						RankupOnKillsPlugin.permission.playerAddGroup(attacker,
-								nextRank.getName());
-						RankupOnKillsPlugin.debug("Set rank for "
-								+ attacker.getName() + " Rank: "
-								+ nextRank.getName());
+						
+							
+							int num = rdp.getInt("count.mob");
+						rdp.set("count.mob", (num + 1));
+						RankupOnKillsPlugin.debug("MOB++ " + attacker.getName()
+								+ "(" + rdp.getInt("count.mob") + ")");
+						incrimented = true;
+						
 					}
-					
-					if(RankupOnKillsPlugin.getPlugin().getConfig().getBoolean("tellPlayer", false)) {
-						attacker.sendMessage(Lang.get("rankedupMessage").replaceAll("%R", nextRank.getName()).replaceAll("%P",attacker.getName()));
+
+					// Check rankup
+					Rank nextRank = Ranks.getRank(rdp);
+
+					if (!RankupOnKillsPlugin.permission.playerInGroup(attacker,
+							nextRank.getName()) && incrimented == true) {
+						// Rankup
+						if (RankupOnKillsPlugin.getPlugin().getConfig()
+								.getBoolean("addRank", false)) {
+							RankupOnKillsPlugin.permission.playerAddGroup(
+									attacker, nextRank.getName());
+							RankupOnKillsPlugin.debug("Added rank for "
+									+ attacker.getName() + " Rank: "
+									+ nextRank.getName());
+						} else {
+							RankupOnKillsPlugin.permission.playerRemoveGroup(
+									attacker, RankupOnKillsPlugin.permission
+											.getPrimaryGroup(attacker));
+							RankupOnKillsPlugin.permission.playerAddGroup(
+									attacker, nextRank.getName());
+							RankupOnKillsPlugin.debug("Set rank for "
+									+ attacker.getName() + " Rank: "
+									+ nextRank.getName());
+						}
+
+						if (RankupOnKillsPlugin.getPlugin().getConfig()
+								.getBoolean("tellPlayer", false)) {
+							attacker.sendMessage(Lang.get("rankedupMessage")
+									.replaceAll("%R", nextRank.getName())
+									.replaceAll("%P", attacker.getName()));
+						}
+					} else {
+						// Keep same rank
+						if (RankupOnKillsPlugin.getPlugin().getConfig()
+								.getBoolean("showCountdown", false)) {
+							GeneralCommands.runRankStat(attacker, rdp);
+						}
+						RankupOnKillsPlugin.debug("Keep same rank "
+								+ attacker.getName());
 					}
-				} else {
-					// Keep same rank
-					if (RankupOnKillsPlugin.getPlugin().getConfig()
-							.getBoolean("showCountdown", false)) {
-						GeneralCommands.runRankStat(attacker,rdp);
-					}
-					RankupOnKillsPlugin.debug("Keep same rank "
-							+ attacker.getName());
 				}
 			}
 		}

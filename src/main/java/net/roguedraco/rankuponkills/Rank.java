@@ -1,6 +1,6 @@
 package net.roguedraco.rankuponkills;
 
-import net.roguedraco.player.RDPlayer;
+import net.roguedraco.rankuponkills.player.RDPlayer;
 
 public class Rank {
 
